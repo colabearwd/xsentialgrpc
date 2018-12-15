@@ -46,7 +46,7 @@ class RemoteService(remote_service.RemoteServicer):
         # put the args to Curl-Obj 
         curltemp=remote_messages.Curl()
         curltemp.targeturl="www.163.com"
-        curltemp.ipversion="ipv4"
+        curltemp.ipversion="4"
         curltemp.timeout=10
         curltemp.serialnum=request.requestnum
         
@@ -76,7 +76,7 @@ class RemoteService(remote_service.RemoteServicer):
         # put the args to Ping-Obj 
         pingtemp=remote_messages.Ping()
         pingtemp.targeturl="www.163.com"
-        pingtemp.ipversion="ipv4"
+        pingtemp.ipversion="4"
         pingtemp.timeout=10
         pingtemp.packagesize=64
         pingtemp.count=5
