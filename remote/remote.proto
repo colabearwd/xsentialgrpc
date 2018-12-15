@@ -1,0 +1,11 @@
+syntax = "proto3";
+import "remote_types.proto";
+
+service Remote {
+  rpc AddCurl (remote.AddCurlRequest) returns (remote.AddCurlResult);
+  rpc CurlRes (remote.CurlResRequest) returns (remote.CurlResResult);
+
+  rpc AddPing (remote.AddPingRequest) returns (remote.AddPingResult);
+  rpc PingRes (remote.PingResRequest) returns (remote.PingResResult);
+
+}

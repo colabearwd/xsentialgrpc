@@ -1,0 +1,70 @@
+syntax = "proto3";
+package remote;
+
+message Curl {
+  string  targeturl = 1;
+  string  ipversion = 2;
+  int32   timeout = 3;
+  int32   serialnum = 4;
+}
+
+message CurlRes {
+  string  curlhttpcode = 1;
+  string  curlhttpconnect = 2;
+  string  curltimenameloopup = 3;
+  string  curltimeredirect = 4;
+  string  curltimepretransfer = 5;
+  string  curltimeconnect = 6;
+  string  curltimestarttransfer = 7;
+  string  curltimetotal = 8;
+  string  curlspeeddownload = 9;
+  int32   serialnum = 10;
+}
+
+message Ping {
+  string  targeturl=1;
+  string  ipversion=2;
+  int32   timeout=3;
+  int32   packagesize=4;
+  int32   count=5;
+  int32   serialnum = 6;
+}
+
+message PingRes { 
+  int32   lossrate=1;
+  int32   maxtime=2;
+  int32   averagetime=3;
+  int32   serialnum = 4;
+}
+
+message AddCurlRequest {
+  int32 requestnum = 1;
+}
+
+message AddCurlResult {
+  Curl curl = 1;
+}
+
+message CurlResRequest {
+  CurlRes curlres = 1;
+}
+
+message CurlResResult {
+  int32 results = 1;
+}
+
+message AddPingRequest {
+  int32 requestnum = 1;
+}
+
+message AddPingResult {
+  Ping ping = 1;
+}
+
+message PingResRequest {
+  PingRes pingres = 1;
+}
+
+message PingResResult {
+  int32 results = 1;
+}
