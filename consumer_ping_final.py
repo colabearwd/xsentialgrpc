@@ -9,13 +9,16 @@ from grpc._channel import _Rendezvous
 
 import push_pb2
 import push_pb2_grpc
-
 from push_pb2 import *
 from push_pb2_grpc import *
+
+
 import commands
 import re
 import json
 import requests
+
+import config
 
 # ip , get the ip
 # NODE = "995"
@@ -67,39 +70,36 @@ def do_script(tempmessage):
         res.append(t2[2])
         res.append(t2[1])
         res.append(serialnum)
+        
+        push_url = "http://{}:3456/temporarytask/post_temp_pingres/".format(config.server_config['ip'])
 	
-	print(res[0])
-	print(res[1])
-	print(res[2])
-	print(res[3])
-
-
-        push_url = "http://202.120.83.82:3456/temporarytask/post_temp_pingres/"
+        payload = {'ping_serialnum':res[3],'ping_lossrate':res[0],'ping_maxtime':res[1],'ping_averagetime':res[2]}
 	
-	payload = {'ping_serialnum':res[3],'ping_lossrate':res[0],'ping_maxtime':res[1],'ping_averagetime':res[2]}
-	
-	print(json.dumps(payload))
+        print(json.dumps(payload))
 
 	#r = requests.post(push_url, json=json.dumps(payload))
 	#r = requests.post(push_url, json=json.loads(payload))
-	r = requests.post(push_url, json=payload)
+        r = requests.post(push_url, json=payload)
 	
 	
         return res
 
 
 def run():
-    conn = grpc.insecure_channel("202.120.83.82:8081")
+    addr = "{}:{}".format(config.server_config['ip'],config.server_config['port'])
+    conn = grpc.insecure_channel(addr)
     client = push_pb2_grpc.MessageSyncStub(channel=conn)
+    
 
     try:
         response = client.PushMessageStream(ConnRequest(channel=NODE))
+
 
         for r in response:
             print(r.message)
         # tempmessage=r.message
 	    
-	    res = do_script(r.message)
+            res = do_script(r.message)
     
     except _Rendezvous as e:
         # here we can setup some retry mechanism.

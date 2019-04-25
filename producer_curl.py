@@ -6,7 +6,7 @@ import grpc
 
 from app.grpc_push.push_pb2 import SubmitRequest
 from app.grpc_push.push_pb2_grpc import MessageSyncStub
-
+import config
 
 # raspberry node = channel
 
@@ -26,8 +26,11 @@ def run(a, b, c, d, e):
                                                                              SERIALNUM,
                                                                              TARGETURL,
                                                                              TIMEOUT
-                                                                             )
-    conn = grpc.insecure_channel("202.120.83.82:8081")
+    )
+
+    addr = "localhost:{}".format(config.server_config['port']) 
+
+    conn = grpc.insecure_channel(addr)
     client = MessageSyncStub(channel=conn)
 #    for i in range(1, 10000000):
     client.SubmitMessage(SubmitRequest(channel=NODE, message=MESSAGE))

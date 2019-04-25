@@ -16,6 +16,7 @@ import commands
 import re
 import json
 import requests
+import config
 
 nodenamecmd = "uname -n"
 status, output = commands.getstatusoutput(nodenamecmd)
@@ -40,7 +41,7 @@ def do_script(tempmessage):
 
     res = output.split(":")
 
-    push_url = "http://202.120.83.82:3456/temporarytask/post_temp_curlres/"
+    push_url = "http://{}:3456/temporarytask/post_temp_curlres/".format(config.server_config['ip'])
 
     payload = { 'curl_httpcode': res[0], 
                 'curl_httpconnect': res[1],
@@ -64,7 +65,8 @@ def do_script(tempmessage):
 
 
 def run():
-    conn = grpc.insecure_channel("202.120.83.82:8081")
+    addr = "{}:{}".format(config.server_config['ip'],config.server_config['port'])
+    conn = grpc.insecure_channel(addr)
     client = push_pb2_grpc.MessageSyncStub(channel=conn)
 
     try:

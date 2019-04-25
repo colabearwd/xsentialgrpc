@@ -9,7 +9,7 @@ import threading
 
 from push_pb2 import SubmitReply, MessageReply
 from push_pb2_grpc import MessageSyncServicer, add_MessageSyncServicer_to_server
-
+import config
 
 class MessageSync(MessageSyncServicer, threading.Thread):
     def __init__(self, cond):
@@ -51,7 +51,8 @@ def serve():
     m = MessageSync(cond)
 
     add_MessageSyncServicer_to_server(m, grpcserver)
-    grpcserver.add_insecure_port('0.0.0.0:8081')
+    addr = "0.0.0.0:{}".format(config.server_config['port'])
+    grpcserver.add_insecure_port(addr)
     grpcserver.start()
 
     sleep(1000000)
