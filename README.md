@@ -19,10 +19,12 @@ client use screen to execute
 2.modify config.py
 
 3.use virtual env
-virtualenv venv
+client use py3
+apt-get install python3-venv
+python3 -m venv venv
 source vnev/bin/active
 
-4.pip install requests grpcio grpcio-tools 
+4.pip install -r requirement 
 
 5.python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./push.proto
 
