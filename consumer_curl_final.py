@@ -36,7 +36,7 @@ def do_script(tempmessage):
 
     cmd = "curl -"+ ipversion +" -o /dev/null --connect-timeout "+ timeout +" -s -w %{http_code}:%{http_connect}:%{time_namelookup}:%{time_redirect}:%{time_pretransfer}:%{time_connect}:%{time_starttransfer}:%{time_total}:%{speed_download} " + targeturl
 
-    print cmd
+    print(cmd)
     status, output = commands.getstatusoutput(cmd)
 
     res = output.split(":")
